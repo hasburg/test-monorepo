@@ -30,7 +30,7 @@ app.post("/api/upload", (req, res) => {
       });
     } else {
       const image = req.files.fileKey;
-      const newImageName = uuid.v4() + image.name;
+      const newImageName = new Date().getMilliseconds() + uuid.v4();
       image.name = newImageName;
       image.mv("./uploads/" + newImageName);
       res.send({

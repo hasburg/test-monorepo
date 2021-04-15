@@ -23,16 +23,24 @@
 
 <mat-card class="content-card">
   <mat-card-header>
-    
+
     <mat-card-title>
       Images already shared
     </mat-card-title>
   </mat-card-header>
-<img src="" alt="">
+  <img src="" alt="">
   <mat-card-content>
-    <mat-card  class="image item" *ngFor="let item of imagesShared">
-      <img [src]="getImage(item)"  class="image"  alt="">
+    <mat-card class="image item" *ngFor="let item of imageToDisplay">
+      <img [src]="getImage(item)" class="image" alt="">
     </mat-card>
   </mat-card-content>
 </mat-card>
 
+<div class="nav-buttons">
+  <button [disabled]="isBack()" mat-fab (click)='navigate(false)'>
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </button>
+  <button [disabled]='isForward()'  mat-fab (click)='navigate(true)'>
+    <mat-icon>keyboard_arrow_right</mat-icon>
+  </button>
+</div>

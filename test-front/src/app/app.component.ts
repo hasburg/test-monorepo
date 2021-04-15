@@ -13,13 +13,16 @@ export class AppComponent {
   url: any;
   fileToUpload: File = null;
   imagesShared: Array<String> = [];
+  imageToDisplay: Array<String> = [];
 
   constructor(private httpClient: HttpClient, private ioService: IoService) {
     this.ioService.on('message').subscribe((el: Array<string>) => {
       this.imagesShared = el.reverse();
+      this.imageToDisplay = el.slice(0, 12);
     });
-    this.ioService.on('newImage').subscribe((el:any) => {
-      this.imagesShared.unshift(el.msg)
+    this.ioService.on('newImage').subscribe((el: any) => {
+      this.imagesShared.unshift(el.msg);
+      this.imageToDisplay = this.imagesShared.slice(0, 12);
     });
   }
 
@@ -41,6 +44,7 @@ export class AppComponent {
         const newFile = el.data.name;
         this.ioService.emit('newImageSended', { msg: newFile });
         this.imagesShared.unshift('/uploads/' + newFile);
+        this.imageToDisplay = this.imagesShared.slice(0, 12);
       },
       () => {
         //TODO: add error handle
@@ -57,6 +61,37 @@ export class AppComponent {
     const formData: FormData = new FormData();
     formData.append('fileKey', fileToUpload, fileToUpload.name);
     return this.httpClient.post(endpoint, formData);
+  }
+
+  navigate(way) {
+    if (way) {
+      const lastIndex = this.imagesShared.findIndex(
+        (el) => el === this.imageToDisplay[this.imageToDisplay.length - 1]
+      );
+      this.imageToDisplay = this.imagesShared.slice(lastIndex, lastIndex + 12);
+    } else {
+      const currentIndex = this.imagesShared.findIndex(
+        (el) => el === this.imageToDisplay[0]
+      );
+      this.imageToDisplay = this.imagesShared.slice(
+        currentIndex - 11,
+        currentIndex + 1
+      );
+    }
+  }
+  isBack() {
+    return (
+      this.imagesShared.findIndex((el) => el === this.imageToDisplay[0]) - 11 <
+      0
+    );
+  }
+  isForward() {
+    return (
+      this.imagesShared.findIndex(
+        (el) => el === this.imageToDisplay[this.imageToDisplay.length - 1]
+      ) >=
+      this.imagesShared.length - 1
+    );
   }
 
   getImage(path) {
