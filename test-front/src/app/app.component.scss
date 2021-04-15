@@ -1,0 +1,20 @@
+.example-card {
+    min-width: 360px;
+
+    .mat-card-header {
+        justify-content: center;
+        .mat-card-title {
+            display: flex;
+            align-items: center;
+            .example-button-container {
+                margin-left: 25px;
+            }
+        }
+        .logo {
+            position: fixed;
+            width: 55px;
+            left: 10px;
+            top: 10px;
+        }
+    }
+}
