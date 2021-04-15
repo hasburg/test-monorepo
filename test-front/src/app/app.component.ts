@@ -43,7 +43,7 @@ export class AppComponent {
   }
 
   postFile(fileToUpload: File): Observable<any> {
-    const endpoint = 'localhost:3000/api/upload';
+    const endpoint = 'http://localhost:3000/api/upload';
     const formData: FormData = new FormData();
     formData.append('fileKey', fileToUpload, fileToUpload.name);
     return this.httpClient.post(endpoint, formData);
