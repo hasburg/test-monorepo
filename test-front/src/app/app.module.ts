@@ -7,6 +7,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -16,6 +18,7 @@ import { MatCardModule } from '@angular/material/card';
     MatButtonModule,
     MatIconModule,
     MatCardModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

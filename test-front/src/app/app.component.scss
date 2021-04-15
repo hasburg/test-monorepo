@@ -1,4 +1,4 @@
-.example-card {
+.header-card {
     min-width: 360px;
 
     .mat-card-header {
@@ -15,6 +15,17 @@
             width: 55px;
             left: 10px;
             top: 10px;
+        }
+    }
+    .mat-card-content {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        .imageUpload{
+            min-height: 200px;
+            max-height: 200px;
+            max-width: 200px;
+            min-width: 200px;
         }
     }
 }
