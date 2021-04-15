@@ -8,7 +8,7 @@ export class IoService {
   private socket: Socket;
 
   constructor() {
-    this.socket = io(environment + ':3001');
+    this.socket = io(environment.host + ':3001');
   }
 
   emit(event: string, data: any) {
