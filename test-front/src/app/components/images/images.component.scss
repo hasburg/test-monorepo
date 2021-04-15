@@ -1,0 +1,13 @@
+.content-card {
+    margin-top: 20px;
+    min-width: 360px;
+    .mat-card-content {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        .item {
+            margin: 5px 1px;
+        }
+    }
+}
+

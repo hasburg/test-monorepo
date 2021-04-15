@@ -1,0 +1,8 @@
+<div class="nav-buttons">
+    <button [disabled]="isBack" mat-fab (click)='navigate(false)'>
+        <mat-icon>keyboard_arrow_left</mat-icon>
+    </button>
+    <button [disabled]='isForward' mat-fab (click)='navigate(true)'>
+        <mat-icon>keyboard_arrow_right</mat-icon>
+    </button>
+</div>

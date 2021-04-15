@@ -1,0 +1,22 @@
+<mat-card class="header-card">
+    <mat-card-header>
+      <img src="../assets/logo.png" alt="logo" class="logo">
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>Share your images now
+        <input style="display: none;" #inputFile type='file' (change)="onSelectFile($event)"
+          accept="image/jpeg,image/png">
+        <div class="example-button-container">
+          <button mat-fab (click)="inputFile.click()" *ngIf="!fileToUpload">
+            <mat-icon>add_photo_alternate</mat-icon>
+          </button>
+          <button mat-fab (click)="uploadImage()" *ngIf="fileToUpload">
+            <mat-icon>cloud_upload</mat-icon>
+          </button>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+  
+    <mat-card-content>
+      <img *ngIf="url" [src]="url" class="image">
+    </mat-card-content>
+  </mat-card>
