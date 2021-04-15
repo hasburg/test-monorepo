@@ -4,6 +4,7 @@ const cors = require("cors");
 
 const morgan = require("morgan");
 const uuid = require("uuid");
+const path = require("path");
 const app = express();
 
 app.use(
@@ -14,6 +15,9 @@ app.use(
 app.use(cors());
 
 app.use(morgan("dev"));
+
+app.use(express.static(path.join(__dirname + "/test-front/dist/test-front")));
+
 app.post("/api/upload", (req, res) => {
   try {
     if (!req.files) {
@@ -38,4 +42,9 @@ app.post("/api/upload", (req, res) => {
     res.status(500).send(err);
   }
 });
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname + "/test-front/dist/test-front/index.html"));
+});
+
 app.listen(3000);
