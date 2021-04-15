@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
 import { IoService } from './io.service';
 
@@ -9,17 +10,17 @@ import { IoService } from './io.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'test-front';
   url: any;
   fileToUpload: File = null;
-  
-  constructor(private httpClient: HttpClient, private ioService: IoService) {
+  imagesShared: Array<String> = [];
 
-    this.ioService.on('connection');
-    this.ioService.on('newImage').subscribe(el=>{
-      console.log(el);
-      
-    })
+  constructor(private httpClient: HttpClient, private ioService: IoService) {
+    this.ioService.on('message').subscribe((el: Array<string>) => {
+      this.imagesShared = el.reverse();
+    });
+    this.ioService.on('newImage').subscribe((el:any) => {
+      this.imagesShared.unshift(el.msg)
+    });
   }
 
   onSelectFile(event: any) {
@@ -37,12 +38,12 @@ export class AppComponent {
   uploadImage() {
     this.postFile(this.fileToUpload).subscribe(
       (el) => {
-        this.ioService.emit('newImageSended',{})
+        const newFile = el.data.name;
+        this.ioService.emit('newImageSended', { msg: newFile });
+        this.imagesShared.unshift('/uploads/' + newFile);
       },
       () => {
         //TODO: add error handle
-        this.fileToUpload = null;
-        this.url = null;
       },
       () => {
         this.fileToUpload = null;
@@ -56,5 +57,9 @@ export class AppComponent {
     const formData: FormData = new FormData();
     formData.append('fileKey', fileToUpload, fileToUpload.name);
     return this.httpClient.post(endpoint, formData);
+  }
+
+  getImage(path) {
+    return environment.host + path;
   }
 }

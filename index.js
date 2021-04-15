@@ -18,7 +18,8 @@ app.use(cors());
 app.use(morgan("dev"));
 
 app.use(express.static(path.join(__dirname + "/test-front/dist/test-front")));
-app.use("/images", express.static(path.join(__dirname + "/uploads")));
+const pathToImages = "/uploads";
+app.use(pathToImages, express.static(path.join(__dirname + "/uploads")));
 
 app.post("/api/upload", (req, res) => {
   try {
@@ -28,8 +29,10 @@ app.post("/api/upload", (req, res) => {
         message: "No file uploaded",
       });
     } else {
-      let image = req.files.fileKey;
-      image.mv("./uploads/" + uuid.v4() + image.name);
+      const image = req.files.fileKey;
+      const newImageName = uuid.v4() + image.name;
+      image.name = newImageName;
+      image.mv("./uploads/" + newImageName);
       res.send({
         status: true,
         message: "File is uploaded",
@@ -50,18 +53,22 @@ app.get("/", (req, res) => {
 });
 app.listen(3000);
 
-
 const io = require("socket.io")(3001, {
   cors: {
     origin: "*",
   },
 });
+
 io.on("connection", (socket) => {
-  socket.on("newImageSended", () => {
+  socket.send(
+    fs
+      .readdirSync(path.join(__dirname + "/uploads"))
+      .map((el) => `${pathToImages}/${el}`)
+  );
+  socket.on("newImageSended", (object) => {
+    console.log(object);
     socket.broadcast.emit("newImage", {
-      msg: fs.readdirSync(path.join(__dirname + "/uploads")),
+      msg: `${pathToImages}/${object.msg}`,
     });
   });
 });
-
-

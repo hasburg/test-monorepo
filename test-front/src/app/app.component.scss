@@ -11,7 +11,7 @@
             }
         }
         .logo {
-            position: fixed;
+            position: absolute;
             width: 55px;
             left: 10px;
             top: 10px;
@@ -21,11 +21,25 @@
         display: flex;
         justify-content: center;
         margin-top: 10px;
-        .imageUpload{
-            min-height: 200px;
-            max-height: 200px;
-            max-width: 200px;
-            min-width: 200px;
+    }
+}
+
+.content-card {
+    margin-top: 20px;
+    min-width: 360px;
+    .mat-card-content {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        .item {
+            margin: 5px 1px;
         }
     }
+}
+
+.image {
+    min-height: 200px;
+    max-height: 200px;
+    max-width: 200px;
+    min-width: 200px;
 }
