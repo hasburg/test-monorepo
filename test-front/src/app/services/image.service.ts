@@ -90,7 +90,7 @@ export class ImageService {
   }
 
   getImage(path) {
-    return environment.host + path;
+    return `url(${environment.host + path})` ;
   }
 }
 

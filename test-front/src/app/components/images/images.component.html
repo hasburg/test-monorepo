@@ -7,9 +7,9 @@
     </mat-card-header>
     <img src="" alt="">
     <mat-card-content>
-      <mat-card class="image item" *ngFor="let item of imageToDisplay">
-        <img [src]="getImage(item)" class="image" alt="">
+      <mat-card s class="image item" *ngFor="let item of imageToDisplay">
+        <div [style.background-image]="getImage(item)" class="backImage" alt="">
+          </div>
       </mat-card>
     </mat-card-content>
   </mat-card>
-  
