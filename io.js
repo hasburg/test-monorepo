@@ -18,4 +18,8 @@ io.on("connection", (socket) => {
       msg: `${pathToImages}/${object.msg}`,
     });
   });
+
+  socket.on("onReset", (object) => {
+    socket.broadcast.emit("reset", {});
+  });
 });

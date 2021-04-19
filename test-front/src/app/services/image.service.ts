@@ -5,7 +5,7 @@ import { RestService } from './rest.service';
 
 @Injectable({ providedIn: 'root' })
 export class ImageService {
-  url: string|ArrayBuffer;
+  url: string | ArrayBuffer;
   fileToUpload: File = null;
   imagesShared: Array<String> = [];
   imageToDisplay: Array<String> = [];
@@ -17,6 +17,10 @@ export class ImageService {
     this.ioService.on('newImage').subscribe((el: MessageInterface) => {
       this.imagesShared.unshift(el.msg);
       this.imageToDisplay = this.imagesShared.slice(0, 12);
+    });
+    this.ioService.on('reset').subscribe((el) => {
+      this.imageToDisplay = [];
+      this.imagesShared = [];
     });
   }
 
@@ -50,12 +54,16 @@ export class ImageService {
     );
   }
   resetImages() {
-    this.restService.resetFiles().subscribe((el)=>{
-      console.log(el);
-      
-    },()=>{
-      //TODO: add error handle
-    });
+    this.restService.resetFiles().subscribe(
+      (el) => {
+        this.imageToDisplay = [];
+        this.imagesShared = [];
+        this.ioService.emit('onReset', {});
+      },
+      () => {
+        //TODO: add error handle
+      }
+    );
   }
 
   navigate(way) {
@@ -90,10 +98,10 @@ export class ImageService {
   }
 
   getImage(path) {
-    return `url(${environment.host + path})` ;
+    return `url(${environment.host + path})`;
   }
 }
 
-export interface MessageInterface{
-  msg:string;
+export interface MessageInterface {
+  msg: string;
 }
