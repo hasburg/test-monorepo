@@ -12,4 +12,9 @@ export class RestService {
     formData.append('fileKey', fileToUpload, fileToUpload.name);
     return this.httpClient.post(endpoint, formData);
   }
+  
+  resetFiles(): Observable<any> {
+    const endpoint = environment.host + '/api/upload';
+    return this.httpClient.delete(endpoint);
+  }
 }

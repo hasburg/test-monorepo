@@ -1,6 +1,8 @@
 const upload = require("express").Router();
 const uuid = require("uuid");
 const path = require("path");
+const fs = require("fs");
+
 upload.post("/upload", (req, res) => {
   try {
     if (!req.files) {
@@ -26,6 +28,21 @@ upload.post("/upload", (req, res) => {
         },
       });
     }
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+upload.delete("/upload", (req, res) => {
+  try {
+    const pathToUpload = path.resolve(__dirname, "../../../uploads");
+    const toUnlink = [];
+    fs.readdirSync(pathToUpload).forEach((el) => {
+      toUnlink.push(fs.unlink(pathToUpload + "/" + el, () => {}));
+    });
+    Promise.all(toUnlink).then(() => {
+      res.status(200).send({ message: "ok" });
+    });
   } catch (err) {
     res.status(500).send(err);
   }

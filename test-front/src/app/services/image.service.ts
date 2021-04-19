@@ -49,6 +49,14 @@ export class ImageService {
       }
     );
   }
+  resetImages() {
+    this.restService.resetFiles().subscribe((el)=>{
+      console.log(el);
+      
+    },()=>{
+      //TODO: add error handle
+    });
+  }
 
   navigate(way) {
     if (way) {

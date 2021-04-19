@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  host:'http://localhost:3000'
+  host:'http://localhost:80',
+  io: 'http://localhost:3001'
 };
 
 /*

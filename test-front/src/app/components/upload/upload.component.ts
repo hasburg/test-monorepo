@@ -22,4 +22,8 @@ export class UploadComponent implements OnInit {
   uploadImage() {
     this.imageService.uploadImage();
   }
+
+  resetImages(){
+    this.imageService.resetImages();
+  }
 }
